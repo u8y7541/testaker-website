@@ -3,6 +3,7 @@ import './CreateTest.css';
 import TestQuestion from '../components/TestQuestion';
 import Login from './Login';
 
+import axios from 'axios';
 import header from '../utils/header';
 import authorize from '../utils/authorize';
 
@@ -19,8 +20,20 @@ export default class CreateTest extends Component {
 		let result = window.test.map((item)=>(item.answerChoices ? item : Object.assign(item, {answerChoices: []})))
 		console.log(JSON.stringify(result))
 
-		await fetch(`http://13.58.54.246/api/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
-		document.getElementById('testuploaded').value = "Test successfully uploaded."
+		const body = {"id": this.state.testID,
+					  "test": JSON.stringify(result),
+					  "token": window.localStorage.getItem('TestakerToken')}
+		const headers = {'Content-Type': 'application/json'}
+		const options = {
+			method: "POST",
+			url: "http://13.58.54.246/api/createTest",
+			headers: headers,
+			data: JSON.stringify(body)
+		}
+		const response = await axios(options)
+
+		//await fetch(`http://13.58.54.246/api/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
+		document.getElementById('testuploaded').innerHTML = "Test successfully uploaded."
 	}
 
 	render() {

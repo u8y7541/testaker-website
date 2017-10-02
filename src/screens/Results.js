@@ -13,6 +13,6 @@ export default class Results extends Component {
 					
 				</div>
 			</div>
-		)
+		, '/results')
 	}
 }
