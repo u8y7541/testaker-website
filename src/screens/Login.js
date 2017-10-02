@@ -1,34 +1,46 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import header from '../utils/header';
+
+import './Login.css';
 
 export default class Login extends Component {
-	async login() {
+	constructor(props) {
+		super(props)
+		this.state = {invalid: false}
+	}
+
+	login = async () => {
 		let email = document.getElementById("email").value
 		let password = document.getElementById("password").value
 
 		const body = {"email":email, "password":password}
-		const headers = new Headers({
-			"Content-Type": "application/json",
-		})
+		const headers = {'Content-Type': 'application/json'}
 		const options = {
 			method: "POST",
-			mode: "no-cors",
+			url: "http://13.58.54.246/api/login",
 			headers: headers,
-			body: JSON.stringify(body)
+			data: JSON.stringify(body)
 		}
-		console.log(options)
-		const response = await fetch('http://13.58.54.246/login', options)
-		const json = await response.json()
-		console.log(json)
+		const response = await axios(options)
+		const token = response.data.token
+		if (token === 'Invalid') {
+			this.setState({invalid: true})
+			window.localStorage.removeItem('TestakerToken')
+			return
+		}
+		window.localStorage.setItem('TestakerToken', token)
+
+		window.location = this.props.url
 	}
 
 	render() {
 		return (
 			<div>
-				<div className = "header">
-					<p>Login</p>
-				</div>
+				{header('Login')}
 				<div className = "container">
 					<h3>Enter your email and password.</h3>
+					{this.state.invalid ? <p className = 'invalid'>Invalid email or password</p>:null}
 					<input placeholder = "Email" id = "email"/>
 					<br />
 					<input type = "password" placeholder = "Password" id = "password" />

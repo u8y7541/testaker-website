@@ -1,0 +1,8 @@
+#!/bin/bash
+
+npm run build
+rsync -avz --progress ./build/* math-api:/var/www/math-api/
+
+ssh math-api -t "
+sudo chown -R www-data:www-data /var/www/math-api
+"

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './CreateTest.css';
-import TestQuestion from './components/TestQuestion';
+import TestQuestion from '../components/TestQuestion';
+import Login from './Login';
+
+import header from '../utils/header';
+import authorize from '../utils/authorize';
 
 window.test = [{questionType: "multiplechoice", freeResponse: false}] 
 
@@ -15,16 +19,14 @@ export default class CreateTest extends Component {
 		let result = window.test.map((item)=>(item.answerChoices ? item : Object.assign(item, {answerChoices: []})))
 		console.log(JSON.stringify(result))
 
-		await fetch(`http://13.58.54.246/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
+		await fetch(`http://13.58.54.246/api/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
 		document.getElementById('testuploaded').value = "Test successfully uploaded."
 	}
 
 	render() {
-		return (
+		return authorize(
 			<div>
-				<div className = "header">
-					<p>Create a test</p>
-				</div>
+				{header("Create a test")}
 				<div className = "container">
 					<h3>Test settings</h3>
 					<p className = "choice">Test ID:</p>
@@ -48,6 +50,6 @@ export default class CreateTest extends Component {
 					<p id = 'testuploaded'></p>
 				</div>
 			</div>
-		)
+		, '/createTest')
 	}
 }

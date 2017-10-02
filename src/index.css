@@ -16,11 +16,10 @@ h1, h2, h3 {
 }
 
 input, textarea {
-	border-radius: 5px;
-}
-
-input:focus, textarea:focus {
-	box-shadow: 0px 0px 60px grey;
+	border: none;
+	border-bottom: 1px solid;
+	font-size: 20px;
+	font-family: 'Open Sans', sans-serif;
 }
 
 textarea {
@@ -36,6 +35,11 @@ textarea {
 	margin: auto;
 }
 
+.centered {
+	margin: auto;
+	text-align: center;
+}
+
 .header {
 	background-color: #22cc4f;
 	width: 100%;
@@ -48,9 +52,8 @@ textarea {
 }
 
 .button {
-	margin: auto;
-	margin-right: 50px;
-	margin-left: 50px;
+	display: inline-flex;
+	margin: 10px;
 	background-color: #6babff;
 	padding: 20px;
 	width: 200px;
