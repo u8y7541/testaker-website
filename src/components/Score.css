@@ -1,0 +1,11 @@
+.score {
+	border-bottom: solid 1px black;
+}
+
+.td, .tr {
+	border: none;
+}
+
+.td {
+	padding: 20px !important;
+}

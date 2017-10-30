@@ -1,0 +1,15 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+  var socket = io('http://13.58.54.246:3001');
+  socket.emit('auth', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cnlhLnN1YmJhcmFvMUBnbWFpbC5jb20iLCJpZCI6IjU5YjVlMWYzYzZjMzdmMGY5NGRkNzljMiIsImlhdCI6MTUwNzUwNTMzOX0.7U8Ac-7Wbm4j-Li_0FMwQz-cXRi7gqGpzIe4FgZDrTw", 'ABC')
+
+  socket.on('auth', (data) => {
+  	console.log(data)
+  })
+
+  socket.on('status', (data)=>console.log(data))
+</script>
+</head>
+</html>

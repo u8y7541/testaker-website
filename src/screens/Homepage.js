@@ -31,7 +31,7 @@ export default class App extends Component {
             </div>
 
             <div>
-              <Link className = "button" to = "/">Monitor a test</Link>
+              <Link className = "button" to = "/monitor">Monitor a test</Link>
             </div>
 
             <div>
