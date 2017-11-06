@@ -32,6 +32,7 @@ export default class Results extends Component {
 			<div>
 				{header("View Results")}
 				<div className="container">
+					<center>
 					{(()=>{
 						if (this.state.results === null) {
 							return (
@@ -55,6 +56,7 @@ export default class Results extends Component {
 
 						return answer
 					})()}
+					</center>
 				</div>
 			</div>
 		, '/results')

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './MonitorTest.css';
 
+import TestStatus from '../components/TestStatus';
+
 import io from 'socket.io-client';
 
 import header from '../utils/header';
@@ -9,23 +11,31 @@ import authorize from '../utils/authorize';
 export default class MonitorTest extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {monitoring: false, status: {}}
+		this.state = {monitoring: false, status: {taking: [], finished: []}}
 		this.socket = io('http://13.58.54.246:3001')
 	}
 
 	monitor = () => {
-		console.log('clicked')
-		this.socket.emit('auth', window.localStorage.getItem('TestakerToken'), document.getElementById('testid'),
-		(data) => {
+		const payload = {
+			token: window.localStorage.getItem('TestakerToken'),
+			id: document.getElementById('testid').value
+		}
+		this.socket.emit('auth', payload)
+		this.socket.on('auth', (data) => {
 			if (data === 'Authorized') {
 				this.setState({monitoring: true})
-				setInterval(this.socket.emit('status'), 1000)
+				setInterval(()=>{
+					this.socket.emit('status', 'asdf')
+				}, 1000)
 			}
 		})
 
 		this.socket.on('status', (data) => {
+			if (data === 'Test not being taken') {
+				this.setState({status: {taking: [], finished: this.state.status.finished}})
+				return
+			}
 			this.setState({status: data})
-			console.log(data)
 		})
 	}
 
@@ -35,7 +45,6 @@ export default class MonitorTest extends Component {
 				{header('Monitor Test')}
 				<div className = 'container'>
 					{(()=>{
-						console.log('re-rendering')
 						if (!this.state.monitoring) {
 							return (<div>
 								<p>Test ID: </p>
@@ -46,7 +55,20 @@ export default class MonitorTest extends Component {
 
 						return (
 							<div>
-								<p>{this.state.status}</p>
+								<p>Still taking: {this.state.status.taking.length}</p>
+								<p>Finished: {this.state.status.finished.length}</p>
+								{(()=>{
+									let answer = []
+									let counter = 0;
+									for (let taker of this.state.status.taking) {
+										answer.push(<TestStatus number = {++counter} name = {taker[0]} status = 'Taking' key = {counter} />)
+									}
+
+									for (let finisher of this.state.status.finished) {
+										answer.push(<TestStatus number = {++counter} name = {finisher[0]} status = 'Finished' key = {counter} />)
+									}
+									return answer
+								})()}
 							</div>
 						)
 					})()}
