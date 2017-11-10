@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import header from '../utils/header';
+import config from '../utils/config';
 
 import './Login.css';
 
@@ -18,7 +19,7 @@ export default class Login extends Component {
 		const headers = {'Content-Type': 'application/json'}
 		const options = {
 			method: "POST",
-			url: "http://13.58.54.246/api/login",
+			url: config.url + "/api/login",
 			headers: headers,
 			data: JSON.stringify(body)
 		}

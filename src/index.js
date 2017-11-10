@@ -5,6 +5,7 @@ import './index.css';
 
 import Homepage from './screens/Homepage';
 import Login from './screens/Login';
+import CreateAccount from './screens/CreateAccount';
 import CreateTest from './screens/CreateTest';
 import Results from './screens/Results';
 import MonitorTest from './screens/MonitorTest';
@@ -16,6 +17,7 @@ ReactDOM.render((
 		<div>
 			<Route exact path = "/" render = {()=><Homepage />} />
 			<Route exact path = "/login" render = {()=><Login url = '/' />} />
+			<Route exact path = "/createAccount" render = {()=><CreateAccount />} />
 			<Route exact path = "/createTest" render = {()=><CreateTest />} />
 			<Route exact path = "/results" render = {()=><Results />} />
 			<Route exact path = "/monitor" render = {()=><MonitorTest />} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Score from '../components/Score';
 import header from '../utils/header';
 import authorize from '../utils/authorize';
+import config from '../utils/config';
 
 import axios from 'axios';
 
@@ -14,7 +15,7 @@ export default class Results extends Component {
 	}
 
 	getResults = async () => {
-		const url = `http://13.58.54.246/api/getResults?id=${document.getElementById('testid').value}`
+		const url = config.url + `/api/getResults?id=${document.getElementById('testid').value}`
 		const headers = {"Content-Type": "application/json"}
 		const body = {"token": window.localStorage.getItem('TestakerToken')}
 		const options = {
@@ -44,10 +45,10 @@ export default class Results extends Component {
 							)
 						}
 						let answer = [<Score name = 'Name' score = 'Score' date = 'Date' />]
-						let numRight = 0
 						for (let score of this.state.results) {
-							for (let question in score.result) {
-								if (score.result[question] === true) {
+							let numRight = 0
+							for (let [i, question] of score.result.entries()) {
+								if (question['q'+(i+1)]) {
 									numRight++;
 								}
 							}

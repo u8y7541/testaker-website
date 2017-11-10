@@ -31,6 +31,10 @@ export default class App extends Component {
             </div>
 
             <div>
+              <Link className = "button" to = "/createAccount">Register</Link>
+            </div>
+
+            <div>
               <Link className = "button" to = "/monitor">Monitor a test</Link>
             </div>
 

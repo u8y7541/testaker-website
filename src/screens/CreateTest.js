@@ -6,6 +6,7 @@ import Login from './Login';
 import axios from 'axios';
 import header from '../utils/header';
 import authorize from '../utils/authorize';
+import config from '../utils/config';
 
 window.test = [{questionType: "multiplechoice", freeResponse: false}] 
 
@@ -26,13 +27,13 @@ export default class CreateTest extends Component {
 		const headers = {'Content-Type': 'application/json'}
 		const options = {
 			method: "POST",
-			url: "http://13.58.54.246/api/createTest",
+			url: config.url + "/api/createTest",
 			headers: headers,
 			data: JSON.stringify(body)
 		}
 		const response = await axios(options)
 
-		//await fetch(`http://13.58.54.246/api/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
+		//await fetch(config.url + `/api/createTest?id=${this.state.testID}&test=${encodeURIComponent(JSON.stringify(result))}`, {mode: "no-cors", method: "POST"})
 		document.getElementById('testuploaded').innerHTML = "Test successfully uploaded."
 	}
 

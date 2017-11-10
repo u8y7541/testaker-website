@@ -7,12 +7,13 @@ import io from 'socket.io-client';
 
 import header from '../utils/header';
 import authorize from '../utils/authorize';
+import config from '../utils/config';
 
 export default class MonitorTest extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {monitoring: false, status: {taking: [], finished: []}}
-		this.socket = io('http://13.58.54.246:3001')
+		this.socket = io(config.url + ':3001')
 	}
 
 	monitor = () => {
@@ -58,6 +59,9 @@ export default class MonitorTest extends Component {
 								<p>Still taking: {this.state.status.taking.length}</p>
 								<p>Finished: {this.state.status.finished.length}</p>
 								{(()=>{
+									if (this.state.status.taking.length === 0) {
+										return (<p><i>Test finished</i></p>)
+									}
 									let answer = []
 									let counter = 0;
 									for (let taker of this.state.status.taking) {
